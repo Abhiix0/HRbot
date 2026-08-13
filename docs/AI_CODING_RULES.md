@@ -1,0 +1,3 @@
+# AI Coding Rules
+
+Guidelines for AI agents generating code in this repository...

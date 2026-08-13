@@ -1,60 +1,18 @@
-# test
+# NovaTech HR CLI
 
-An AI chatbot generated with Spawn, using Pydantic-Ai + Groq.
+NovaTech HR CLI — an AI assistant for HR queries.
 
-## Getting Started
+## Structure
+- `src/hrbot/`: Main package
+- `knowledge/`: HR company knowledge files
+- `prompts/`: System prompts
+- `docs/`: Additional documentation
 
-1. Copy `.env.example` to `.env` and fill in your credentials:
+## Setup
+1. Clone the repository
+2. Run `uv sync` or install dependencies
+3. Set `GROQ_API_KEY` in `.env`
+4. Run the app: `python -m hrbot.cli.app` or `hrbot`
 
-```env
-GROQ_API_KEY=your-key
-```
-
-2. Run the chatbot:
-
-```bash
-uv run python -m src.main
-```
-
-## Example
-
-```
-You: Hello
-Bot: Hello! How can I help?
-```
-
-## Project Structure
-
-```
-test/
-├── src/
-│   ├── chatbot/      # Conversation orchestration
-│   ├── providers/    # LLM provider (llm.py)
-│   ├── prompts/      # system.txt
-│   ├── memory/       # Runtime conversation history
-│   ├── config/       # Settings and env loading
-│   └── main.py
-├── tests/
-├── .env.example
-└── README.md
-```
-
-## Running Tests
-
-```bash
-uv run pytest
-```
-
-## Roadmap (Not Yet Available)
-
-```bash
-spawn add rag
-spawn add tools
-spawn add vector-db
-spawn add memory
-spawn add mcp
-spawn add voice
-spawn add web-ui
-spawn add streaming
-spawn add observability
-```
+## Contributing
+Please read the docs in `docs/` before contributing.

@@ -8,5 +8,5 @@ def load_env() -> None:
 
 
 def get_system_prompt() -> str:
-    prompt_path = Path(__file__).parent.parent / "prompts" / "system.txt"
+    prompt_path = Path(__file__).parent.parent.parent.parent / "prompts" / "system.txt"
     return prompt_path.read_text(encoding="utf-8").strip()
