@@ -2,7 +2,7 @@ import os
 
 from pydantic_ai import Agent
 
-from src.memory.history import get_pai_history, append_pai_messages
+from hrbot.memory.store import append_pai_messages, get_pai_history
 
 
 def get_llm_response(messages: list[dict], system_prompt: str) -> str:

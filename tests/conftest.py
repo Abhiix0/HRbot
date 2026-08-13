@@ -1,6 +1,6 @@
 import pytest
 
-from src.memory.history import clear
+from hrbot.memory.store import clear
 
 
 @pytest.fixture(autouse=True)

@@ -1,10 +1,10 @@
-from src.chatbot.chat import get_response
-from src.config.settings import load_env
+from hrbot.config import load_env
+from hrbot.core.service import get_response
 
 
 def main() -> None:
     load_env()
-    print("Chatbot ready. Type 'quit' to exit.\n")
+    print("HRBot ready. Type 'quit' to exit.\n")
     while True:
         user_input = input("You: ").strip()
         if not user_input:

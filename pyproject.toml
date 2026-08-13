@@ -1,5 +1,9 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "test"
+name = "novatech-hr-cli"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
@@ -8,5 +12,18 @@ dependencies = [
     "ruff>=0.16.2",
 ]
 
+[project.scripts]
+hrbot = "hrbot.cli.app:main"
+
+[tool.setuptools]
+packages = ["hrbot"]
+package-dir = {"" = "src"}
+
 [tool.ruff]
 line-length = 88
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-mock>=3.15.1",
+]

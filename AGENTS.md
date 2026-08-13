@@ -1,6 +1,6 @@
-# test
+# novatech-hr-cli
 
-AI chatbot using Pydantic-Ai with Groq provider.
+NovaTech HR CLI — an AI assistant for HR queries.
 
 ## Required Environment Variable
 
