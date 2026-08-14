@@ -1,53 +1,52 @@
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
-from hrbot.core.service import get_response
+from hrbot.core import service
 from hrbot.knowledge.schema import RetrievalResult
 
 
-def test_get_response_returns_string():
+def _patch_common(response_text: str = "Hello!"):
+    fake_provider = MagicMock()
+    fake_provider.generate.return_value = response_text
     mock_result = RetrievalResult(
-        query="Hi",
+        query="",
         matches=[],
         top_score=0.0,
         confidence="none",
     )
-    with (
-        patch("hrbot.core.service.get_llm_response", return_value="Hello!"),
-        patch("hrbot.core.service.get_system_prompt", return_value="You are helpful."),
-        patch("hrbot.core.service.retriever.retrieve", return_value=mock_result),
-    ):
-        result = get_response("Hi")
+    return (
+        patch.object(service, "get_provider", return_value=fake_provider),
+        patch.object(service, "get_system_prompt", return_value="You are helpful."),
+        patch.object(service.retriever, "retrieve", return_value=mock_result),
+    )
+
+
+def test_get_response_returns_string():
+    patches = _patch_common("Hello!")
+    with patches[0], patches[1], patches[2]:
+        result = service.get_response("Hi")
     assert isinstance(result, str)
     assert result == "Hello!"
 
 
 def test_generate_response_mock():
-    mock_result = RetrievalResult(
-        query="test input",
-        matches=[],
-        top_score=0.0,
-        confidence="none",
-    )
-    with (
-        patch("hrbot.core.service.get_llm_response", return_value="Mocked response"),
-        patch("hrbot.core.service.get_system_prompt", return_value="prompt"),
-        patch("hrbot.core.service.retriever.retrieve", return_value=mock_result),
-    ):
-        result = get_response("test input")
+    patches = _patch_common("Mocked response")
+    with patches[0], patches[1], patches[2]:
+        result = service.get_response("test input")
     assert result == "Mocked response"
 
 
 def test_get_response_non_empty():
-    mock_result = RetrievalResult(
-        query="Tell me something",
-        matches=[],
-        top_score=0.0,
-        confidence="none",
-    )
-    with (
-        patch("hrbot.core.service.get_llm_response", return_value="Sure!"),
-        patch("hrbot.core.service.get_system_prompt", return_value="prompt"),
-        patch("hrbot.core.service.retriever.retrieve", return_value=mock_result),
-    ):
-        result = get_response("Tell me something")
+    patches = _patch_common("Sure!")
+    with patches[0], patches[1], patches[2]:
+        result = service.get_response("Tell me something")
     assert result != ""
+
+
+def test_get_response_updates_history():
+    patches = _patch_common("Answer")
+    with patches[0], patches[1], patches[2]:
+        service.get_response("What are the hours?")
+    history = service.get_history()
+    assert history[-2].role == "user"
+    assert history[-1].role == "assistant"
+    assert history[-1].content == "Answer"

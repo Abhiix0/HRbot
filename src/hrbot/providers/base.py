@@ -1,15 +1,71 @@
-import os
+"""LLM provider contract.
 
-from pydantic_ai import Agent
+This module defines the boundary between the application and whatever
+LLM backend is actually in use. Nothing outside `hrbot.providers` should
+import a provider-specific SDK (e.g. `groq`) or handle provider-specific
+exceptions. Everything downstream talks to `LLMProvider` and the plain
+`Message` dataclass defined here.
+"""
 
-from hrbot.memory.store import append_pai_messages, get_pai_history
+from __future__ import annotations
+
+from abc import ABC, abstractmethod
+from collections.abc import Iterator
+from dataclasses import dataclass
 
 
-def get_llm_response(messages: list[dict], system_prompt: str) -> str:
-    model = os.getenv("MODEL", "groq:llama-3.1-8b-instant")
-    user_messages = [m["content"] for m in messages if m["role"] == "user"]
-    prompt = user_messages[-1] if user_messages else ""
-    agent = Agent(model, system_prompt=system_prompt)
-    result = agent.run_sync(prompt, message_history=get_pai_history())
-    append_pai_messages(result.new_messages())
-    return result.output
+@dataclass(frozen=True, slots=True)
+class Message:
+    """A single turn in a conversation, provider-agnostic."""
+
+    role: str  # "system" | "user" | "assistant"
+    content: str
+
+
+# --------------------------------------------------------------------------
+# Normalized provider errors.
+#
+# Every concrete provider must translate its own SDK's exceptions into one
+# of these. The rest of the application only ever needs to catch
+# `ProviderError` (or a specific subclass if it wants to react differently).
+# --------------------------------------------------------------------------
+
+
+class ProviderError(Exception):
+    """Base class for all provider-level failures."""
+
+
+class ProviderConfigError(ProviderError):
+    """Provider could not be constructed (e.g. missing API key)."""
+
+
+class ProviderTimeoutError(ProviderError):
+    """The request to the provider timed out."""
+
+
+class ProviderAuthError(ProviderError):
+    """The provider rejected our credentials."""
+
+
+class ProviderRateLimitError(ProviderError):
+    """The provider is rate-limiting us."""
+
+
+class ProviderAPIError(ProviderError):
+    """A generic/unexpected provider-side failure."""
+
+
+class ProviderEmptyResponseError(ProviderError):
+    """The provider returned no usable content."""
+
+
+class LLMProvider(ABC):
+    """Minimum set of operations the application needs from an LLM backend."""
+
+    @abstractmethod
+    def generate(self, messages: list[Message]) -> str:
+        """Return a complete, non-streamed response for the given messages."""
+
+    @abstractmethod
+    def stream(self, messages: list[Message]) -> Iterator[str]:
+        """Yield response text incrementally for the given messages."""
