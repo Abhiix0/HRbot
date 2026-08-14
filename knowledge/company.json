@@ -1,1 +1,61 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "company_overview_001",
+    "topic": "company_overview",
+    "keywords": [
+      "about NovaTech",
+      "company info",
+      "who are we",
+      "company background",
+      "organization"
+    ],
+    "question": "What is NovaTech Solutions?",
+    "answer": "NovaTech Solutions is a leading technology consulting and services firm with approximately 500 employees headquartered in Hyderabad, India. We specialize in cloud infrastructure, AI-driven automation, and enterprise software solutions. Founded in 2015, NovaTech serves clients across North America, Europe, and Asia-Pacific regions.",
+    "weight": 1.5
+  },
+  {
+    "id": "company_location_001",
+    "topic": "company_location",
+    "keywords": [
+      "where is office",
+      "office location",
+      "Hyderabad office",
+      "company address",
+      "office city"
+    ],
+    "question": "Where is NovaTech's main office located?",
+    "answer": "NovaTech Solutions' primary office is located in Hyderabad, India. The office is situated in the HITECH City area and is easily accessible by metro, bus, and car. Onsite parking is available for employees.",
+    "weight": 1.0
+  },
+  {
+    "id": "hybrid_work_001",
+    "topic": "hybrid_work_model",
+    "keywords": [
+      "hybrid work",
+      "work from home policy",
+      "remote work",
+      "flexible work",
+      "WFH policy",
+      "hybrid model"
+    ],
+    "question": "Does NovaTech operate on a hybrid work model?",
+    "answer": "Yes, NovaTech operates on a hybrid work model. Employees are expected to be in the office at least 3 days per week (typically Monday, Wednesday, Friday) and may work from home on Tuesday and Thursday. Specific schedules may vary by team and can be discussed with your manager. This flexibility supports work-life balance while maintaining team collaboration.",
+    "weight": 1.5
+  },
+  {
+    "id": "working_hours_001",
+    "topic": "working_hours",
+    "keywords": [
+      "office hours",
+      "work timing",
+      "when does work start",
+      "when to arrive",
+      "office timing",
+      "9:30 AM",
+      "6:30 PM"
+    ],
+    "question": "What are the standard working hours at NovaTech?",
+    "answer": "Standard working hours at NovaTech Solutions are 9:30 AM to 6:30 PM, Monday through Friday. Core hours (when all team members must be online or present) are 10:30 AM to 4:30 PM. Flexible arrivals before 10:30 AM and departures after 4:30 PM are permitted, provided 9 hours are completed daily.",
+    "weight": 1.5
+  }
+]

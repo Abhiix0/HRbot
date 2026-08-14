@@ -1,15 +1,22 @@
 from unittest.mock import MagicMock, patch
 
 from hrbot.core import service
+from hrbot.knowledge.schema import RetrievalResult
 
 
 def _patch_common(response_text: str = "Hello!"):
     fake_provider = MagicMock()
     fake_provider.generate.return_value = response_text
+    mock_result = RetrievalResult(
+        query="",
+        matches=[],
+        top_score=0.0,
+        confidence="none",
+    )
     return (
         patch.object(service, "get_provider", return_value=fake_provider),
         patch.object(service, "get_system_prompt", return_value="You are helpful."),
-        patch.object(service.retriever, "search", return_value=""),
+        patch.object(service.retriever, "retrieve", return_value=mock_result),
     )
 
 

@@ -1,1 +1,98 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "leave_casual_001",
+    "topic": "leave_casual_entitlement",
+    "keywords": [
+      "casual leave",
+      "personal days",
+      "how many days",
+      "leave balance",
+      "personal leave"
+    ],
+    "question": "How many casual leave days am I entitled to per year?",
+    "answer": "All permanent employees are entitled to 8 casual leave days per calendar year (January-December). Casual leave is meant for personal work, household duties, or unforeseen situations. Unused casual leave does not carry over to the next year. If you have any remaining balance on December 31st, it will be forfeited.",
+    "weight": 1.5
+  },
+  {
+    "id": "leave_casual_002",
+    "topic": "leave_casual_application",
+    "keywords": [
+      "how to apply for leave",
+      "apply casual leave",
+      "request leave",
+      "apply for time off",
+      "submit leave request"
+    ],
+    "question": "How do I apply for casual leave?",
+    "answer": "To apply for casual leave, submit a request through the NovaTech Leave Management Portal at least 2 business days in advance. Provide your name, date(s) of leave, and a brief reason. Your immediate manager will receive the request and approve or deny it within 24 hours. For emergencies, notify your manager verbally and submit the request within 1 day of the absence.",
+    "weight": 1.0
+  },
+  {
+    "id": "leave_sick_001",
+    "topic": "leave_sick_entitlement",
+    "keywords": [
+      "sick leave",
+      "medical leave",
+      "health leave",
+      "illness",
+      "how many sick days"
+    ],
+    "question": "How many sick leave days am I entitled to?",
+    "answer": "All permanent employees receive 10 sick leave days per calendar year. Sick leave is intended for personal illness, medical appointments, or hospitalization. If you are absent due to illness for more than 2 consecutive days, a medical certificate from a licensed doctor is required. Unused sick leave carries over to the next year with a maximum cap of 30 days.",
+    "weight": 1.5
+  },
+  {
+    "id": "leave_application_001",
+    "topic": "leave_application_process",
+    "keywords": [
+      "leave process",
+      "how to request leave",
+      "leave approval",
+      "leave request steps"
+    ],
+    "question": "What is the process for applying for leave?",
+    "answer": "Follow these steps: 1. Log in to the NovaTech Leave Management Portal with your employee ID, 2. Click 'Apply for Leave' and select the leave type (casual, sick, etc.), 3. Enter the date(s) and duration, 4. Add a reason in the comments field, 5. Submit the request. Your manager receives an email notification and must approve within 24 hours. Approved leave will be reflected in your calendar. Cancel requests must be made at least 1 day before the leave starts.",
+    "weight": 1.0
+  },
+  {
+    "id": "leave_notice_001",
+    "topic": "leave_notice_period",
+    "keywords": [
+      "advance notice",
+      "notice period",
+      "how much notice",
+      "when to apply",
+      "minimum notice"
+    ],
+    "question": "How much advance notice should I give for leave?",
+    "answer": "For casual and earned leave, provide at least 2 business days' notice. For planned vacations or extended leave, provide 7-10 days' notice when possible to allow proper project handover. For sick leave and emergencies, notify your manager immediately (same day) and submit the formal request within 1 day. Failure to provide adequate notice may result in leave denial.",
+    "weight": 1.0
+  },
+  {
+    "id": "leave_approval_001",
+    "topic": "leave_approval_process",
+    "keywords": [
+      "who approves leave",
+      "leave approval",
+      "manager approval",
+      "HR approval"
+    ],
+    "question": "Who approves my leave requests?",
+    "answer": "Your immediate manager is responsible for approving or denying your leave requests. If your manager is on leave during your requested period, the approval falls to the next senior manager. HR monitors all leave records and can escalate disputes. Final approval is documented in the leave portal, and you will receive an email confirmation. For leave beyond 5 consecutive days, HR may request additional documentation.",
+    "weight": 1.0
+  },
+  {
+    "id": "leave_balance_001",
+    "topic": "leave_balance_tracking",
+    "keywords": [
+      "check leave balance",
+      "my leave days",
+      "remaining leave",
+      "leave tracker",
+      "leave status"
+    ],
+    "question": "How can I check my leave balance?",
+    "answer": "You can check your leave balance anytime in the NovaTech Leave Management Portal. Log in with your credentials, go to 'My Leave Balance,' and view approved, pending, and used leave for the current year. You can also generate a leave summary report. Your manager has access to a dashboard showing your team's leave status. If you have questions about your balance, contact HR at hr@novatech.com.",
+    "weight": 1.0
+  }
+]

@@ -1,1 +1,74 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "onboarding_documents_001",
+    "topic": "onboarding_documents",
+    "keywords": [
+      "documents required",
+      "what to bring",
+      "first day documents",
+      "ID proofs",
+      "PAN card",
+      "Aadhaar",
+      "checklist"
+    ],
+    "question": "What documents do I need on my first day?",
+    "answer": "Bring the following on your first day: 1. Signed offer letter, 2. PAN card, 3. Aadhaar card, 4. Any government-issued ID, 5. Address proof (passport, utility bill, or rental agreement), 6. Bank account details for salary transfer, 7. Emergency contact information form. HR will provide a complete checklist during your onboarding call.",
+    "weight": 1.5
+  },
+  {
+    "id": "onboarding_timeline_001",
+    "topic": "onboarding_timeline",
+    "keywords": [
+      "onboarding schedule",
+      "first week",
+      "onboarding week",
+      "orientation schedule",
+      "when do I start"
+    ],
+    "question": "What is the onboarding week timeline?",
+    "answer": "Your onboarding week follows this schedule: Monday - Office access setup, IT provisioning, and welcome orientation (9:30 AM). Tuesday - Department introduction and team meetings. Wednesday - Product and domain knowledge sessions. Thursday - Systems and tools training. Friday - Company policies review and closure meeting. You will be assigned a buddy and HR contact for any questions throughout the week.",
+    "weight": 1.5
+  },
+  {
+    "id": "employee_id_001",
+    "topic": "employee_id_issuance",
+    "keywords": [
+      "employee ID",
+      "ID card",
+      "when will I get ID",
+      "employee badge",
+      "office badge"
+    ],
+    "question": "When will I receive my employee ID?",
+    "answer": "Your employee ID badge will be issued on your first day during the IT setup process. The badge grants access to the office building, parking area, and restricted zones. You must display your badge at all times while in the office. If your badge is lost or damaged, report it to the Admin team immediately.",
+    "weight": 1.0
+  },
+  {
+    "id": "handbook_001",
+    "topic": "employee_handbook",
+    "keywords": [
+      "employee handbook",
+      "company policies",
+      "policy manual",
+      "handbook location",
+      "where to find handbook"
+    ],
+    "question": "Where can I find the employee handbook?",
+    "answer": "The employee handbook is available in two formats: 1. Physical copy will be provided on your first day, 2. Digital copy is available on the NovaTech Intranet (login with your employee credentials on Day 1). The handbook covers company policies, code of conduct, benefits, leave policies, and emergency procedures. HR will walk you through the key sections during onboarding.",
+    "weight": 1.0
+  },
+  {
+    "id": "orientation_001",
+    "topic": "orientation_schedule",
+    "keywords": [
+      "orientation",
+      "welcome session",
+      "company tour",
+      "office tour",
+      "first day orientation"
+    ],
+    "question": "What happens during the orientation on Day 1?",
+    "answer": "Your Day 1 orientation includes: 1. Welcome meeting with HR (30 min), 2. IT provisioning - laptop, email, VPN access (45 min), 3. Office tour and facilities overview (30 min), 4. Lunch with your team (1 hour), 5. Introduction to your manager and direct team (30 min), 6. Workspace setup and systems access verification (30 min). You will finish by 5:00 PM.",
+    "weight": 1.0
+  }
+]

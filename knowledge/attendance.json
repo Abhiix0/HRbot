@@ -1,1 +1,72 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "attendance_hours_001",
+    "topic": "attendance_working_hours",
+    "keywords": [
+      "office hours",
+      "work timing",
+      "attendance hours",
+      "when to be at office",
+      "attendance requirement"
+    ],
+    "question": "What are the working hours for attendance purposes?",
+    "answer": "For attendance tracking, you must complete 9 hours of work per day (Monday-Friday). The standard office hours are 9:30 AM to 6:30 PM. Flexible timing is allowed if you arrive before 10:30 AM (core hour start) and stay until 4:30 PM (core hour end). Your attendance is tracked via office badge swipe and logged in the HR system. Remote working days do not require badge swipes but are logged in the work-from-home portal.",
+    "weight": 1.5
+  },
+  {
+    "id": "punctuality_001",
+    "topic": "punctuality_expectations",
+    "keywords": [
+      "be on time",
+      "punctuality",
+      "arriving late",
+      "attendance expectations",
+      "arrival time"
+    ],
+    "question": "What are the punctuality expectations at NovaTech?",
+    "answer": "Punctuality is a key expectation at NovaTech. You are expected to arrive on time (by core hour 10:30 AM) and maintain professional presence during core hours (10:30 AM-4:30 PM). Repeated late arrivals (more than 2 per week) may result in corrective action. Your manager may discuss patterns with HR. If you foresee a delay, inform your manager in advance via email or Slack.",
+    "weight": 1.0
+  },
+  {
+    "id": "late_arrival_001",
+    "topic": "late_arrival_policy",
+    "keywords": [
+      "late arrival",
+      "coming late",
+      "tardiness",
+      "late to work",
+      "lateness policy"
+    ],
+    "question": "What happens if I arrive late to the office?",
+    "answer": "Occasional late arrivals are permitted if you complete 9 hours of work the same day. However, consistent lateness (more than 2 occurrences per week over a month) is flagged in attendance reports. Your manager will discuss the pattern with you. Repeated delays may result in: 1. Documented warning, 2. Adjustment in benefits, 3. Further HR escalation. Inform your manager if you anticipate a delay.",
+    "weight": 1.0
+  },
+  {
+    "id": "absence_001",
+    "topic": "absence_reporting",
+    "keywords": [
+      "not coming to office",
+      "absence",
+      "report absence",
+      "calling in sick",
+      "unplanned leave"
+    ],
+    "question": "How should I report an absence from work?",
+    "answer": "If you are unable to come to the office or work, notify your manager immediately (same day if possible). Then, apply for leave through the NovaTech Leave Management Portal within 24 hours. For sick absences, attach a medical certificate if the absence exceeds 2 days. Unplanned absences without prior notice or leave approval are marked as 'Absent Without Leave' (AWL) and may result in corrective action or salary deduction.",
+    "weight": 1.5
+  },
+  {
+    "id": "presence_001",
+    "topic": "presence_expectations",
+    "keywords": [
+      "core hours",
+      "when to be at desk",
+      "online presence",
+      "availability",
+      "team presence"
+    ],
+    "question": "What are the core hours when I must be online or present?",
+    "answer": "Core hours at NovaTech are 10:30 AM to 4:30 PM, Monday through Friday. During these hours, all team members are expected to be either in the office or online (for remote work days). This ensures team synchronization, meetings, and collaboration. You may take breaks or step out briefly, but inform your manager or team if you will be unavailable for an extended period. Consistent unavailability during core hours may be flagged.",
+    "weight": 1.0
+  }
+]

@@ -3,13 +3,14 @@ from __future__ import annotations
 from collections.abc import Iterator
 
 from hrbot.config import get_groq_api_key, get_model_name, get_system_prompt
-from hrbot.knowledge.retriever import KnowledgeRetriever
+from hrbot.knowledge.repository import KnowledgeRepository
+from hrbot.knowledge.retriever import Retriever
 from hrbot.memory.store import append_assistant, append_user, get_history
 from hrbot.providers.base import LLMProvider, Message, ProviderError
 from hrbot.providers.groq import GroqProvider
 
-retriever = KnowledgeRetriever()
-retriever.load()
+repo = KnowledgeRepository()
+retriever = Retriever(repo)
 
 _provider: LLMProvider | None = None
 
@@ -28,9 +29,11 @@ def get_provider() -> LLMProvider:
 
 def _build_messages(user_input: str) -> list[Message]:
     system_prompt = get_system_prompt()
-
-    knowledge = retriever.search(user_input)
-    if knowledge:
+    
+    # Augment prompt with knowledge
+    result = retriever.retrieve(user_input)
+    if result.matches:
+        knowledge = result.matches[0].entry.answer
         system_prompt += f"\n\nRelevant company knowledge:\n{knowledge}"
 
     messages = [Message(role="system", content=system_prompt)]

@@ -1,0 +1,25 @@
+[
+  {
+    "id": "invalid_entry_001",
+    "topic": "test_invalid",
+    "keywords": ["test"],
+    "question": "Valid so far",
+    "answer": "This is valid",
+    "weight": 1.0
+  },
+  {
+    "id": "INVALID_ID_BAD_FORMAT",
+    "topic": "test_invalid",
+    "keywords": ["test"],
+    "question": "This entry has an invalid ID format (no underscore sequence)",
+    "answer": "ID validation should fail",
+    "weight": 1.0
+  },
+  {
+    "topic": "missing_id",
+    "keywords": ["test"],
+    "question": "This entry is missing the id field",
+    "answer": "Should fail schema validation",
+    "weight": 1.0
+  }
+]

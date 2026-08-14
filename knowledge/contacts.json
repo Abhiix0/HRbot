@@ -1,1 +1,61 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "contact_hr_001",
+    "topic": "contact_hr",
+    "keywords": [
+      "HR contact",
+      "HR email",
+      "HR phone",
+      "talk to HR",
+      "HR support",
+      "human resources"
+    ],
+    "question": "How can I contact the HR department?",
+    "answer": "For HR-related inquiries (leaves, benefits, policies, complaints), contact the HR department: Name: Priya Sharma, Senior HR Manager, Email: hr@novatech.com, Phone: +91-40-6789-5555, Office Hours: 9:30 AM to 6:30 PM (Mon-Fri). HR responds to emails within 24 hours on business days. You can also visit the HR office on the 2nd floor. For urgent matters or grievances, escalate to the HR Head. HR handles all leave approvals, policy clarifications, and employee concerns.",
+    "weight": 1.5
+  },
+  {
+    "id": "contact_it_001",
+    "topic": "contact_it",
+    "keywords": [
+      "IT support",
+      "IT contact",
+      "IT email",
+      "IT phone",
+      "technical support",
+      "help desk"
+    ],
+    "question": "How can I contact the IT support team?",
+    "answer": "For IT and technical issues (laptop, email, VPN, software, equipment), contact IT Support: Email: it-support@novatech.com, Phone: +91-40-6789-5444, Office Hours: 9:30 AM to 6:30 PM (Mon-Fri). IT responds to requests within 2 hours during office hours. For emergencies (network down, security issues), call the phone number directly. Create a ticket via email with a clear description of the problem, your employee ID, and any error messages. IT will provide remote assistance first, followed by onsite support if needed.",
+    "weight": 1.5
+  },
+  {
+    "id": "contact_admin_001",
+    "topic": "contact_admin",
+    "keywords": [
+      "admin contact",
+      "administration",
+      "office admin",
+      "reception",
+      "facilities"
+    ],
+    "question": "Who handles office administration and facilities?",
+    "answer": "For office administration, facility issues, or general inquiries, contact the Admin team: Email: admin@novatech.com, Office: Ground Floor Reception (HITECH City building). Admin handles badge issues, parking, office tours, visitor check-ins, pantry restocking, and facility maintenance requests. Admin team is available 9:30 AM to 6:30 PM, Monday-Friday. For urgent facility issues (broken AC, restroom issues, parking problems), contact reception directly.",
+    "weight": 1.0
+  },
+  {
+    "id": "contact_payroll_001",
+    "topic": "contact_payroll",
+    "keywords": [
+      "payroll",
+      "salary",
+      "payment",
+      "payroll contact",
+      "salary slip",
+      "finance"
+    ],
+    "question": "How can I reach the Finance/Payroll department?",
+    "answer": "For salary, payment, and finance-related matters, contact the Finance team: Email: payroll@novatech.com, Office Hours: 9:30 AM to 6:30 PM (Mon-Fri). Finance handles salary disbursement, tax documentation (Form 16), salary slips, expense reimbursements, and payroll inquiries. Salary is credited on the last working day of each month. Salary slips are available in the employee portal. For reimbursement or financial queries, include detailed documentation with your request.",
+    "weight": 1.0
+  }
+]
