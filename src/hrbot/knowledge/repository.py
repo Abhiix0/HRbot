@@ -9,9 +9,8 @@ interface for accessing all knowledge facts.
 import json
 import logging
 from pathlib import Path
-from typing import List
 
-from src.hrbot.knowledge.schema import KnowledgeEntry
+from hrbot.knowledge.schema import KnowledgeEntry
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +29,7 @@ class KnowledgeRepository:
       files are broken, it returns an empty list and logs the failures.
     """
 
-    def __init__(self, knowledge_dir: Path = None):
+    def __init__(self, knowledge_dir: Path | None = None):
         """
         Initialize the repository.
         
@@ -45,7 +44,7 @@ class KnowledgeRepository:
         else:
             self.knowledge_dir = knowledge_dir
 
-    def load(self) -> List[KnowledgeEntry]:
+    def load(self) -> list[KnowledgeEntry]:
         """
         Load all knowledge entries from JSON files in the knowledge directory.
         
@@ -63,7 +62,7 @@ class KnowledgeRepository:
             logger.error("Knowledge directory does not exist: %s", self.knowledge_dir)
             return []
 
-        all_entries: List[KnowledgeEntry] = []
+        all_entries: list[KnowledgeEntry] = []
         files_processed = 0
         files_failed = 0
         entries_failed = 0
@@ -106,7 +105,7 @@ class KnowledgeRepository:
                 try:
                     entry = KnowledgeEntry(**entry_data)
                     all_entries.append(entry)
-                except Exception as e:
+                except ValueError as e:
                     entries_failed += 1
                     entry_id = entry_data.get("id", f"(unknown at index {idx})")
                     logger.warning(

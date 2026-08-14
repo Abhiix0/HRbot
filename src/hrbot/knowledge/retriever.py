@@ -7,10 +7,9 @@ No embeddings, no vector databases, no external API calls.
 
 import logging
 import re
-from typing import List, Union
 
-from src.hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
-from src.hrbot.knowledge.repository import KnowledgeRepository
+from hrbot.knowledge.repository import KnowledgeRepository
+from hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +37,7 @@ class Retriever:
     5. Return all entries with score > 0, sorted by score descending
     """
 
-    def __init__(self, entries: Union[List[KnowledgeEntry], KnowledgeRepository]):
+    def __init__(self, entries: list[KnowledgeEntry] | KnowledgeRepository):
         """
         Initialize the retriever with knowledge entries.
         
@@ -147,7 +146,7 @@ class Retriever:
         final_score = raw_score * entry.weight
         return final_score
 
-    def _exact_keyword_match(self, query: str, keywords: List[str]) -> float:
+    def _exact_keyword_match(self, query: str, keywords: list[str]) -> float:
         """
         Check if any keyword (or phrase) appears in the query, or vice versa.
         Returns count of exact matches found (0 or more).
@@ -163,7 +162,7 @@ class Retriever:
 
         return float(match_count)
 
-    def _partial_keyword_match(self, query: str, keywords: List[str]) -> float:
+    def _partial_keyword_match(self, query: str, keywords: list[str]) -> float:
         """
         Measure partial word overlap between query and keywords.
         Scores based on how many query words appear in keyword phrases.
@@ -209,7 +208,7 @@ class Retriever:
         return overlap_ratio
 
     @staticmethod
-    def _tokenize(text: str) -> List[str]:
+    def _tokenize(text: str) -> list[str]:
         """
         Tokenize text into lowercase words, removing punctuation.
         Returns list of words, filtered to non-empty strings.

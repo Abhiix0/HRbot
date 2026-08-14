@@ -6,9 +6,9 @@ Tests keyword-based ranking, scoring, and confidence classification.
 
 import pytest
 
-from src.hrbot.knowledge.repository import KnowledgeRepository
-from src.hrbot.knowledge.retriever import Retriever, STRONG_THRESHOLD, WEAK_THRESHOLD
-from src.hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
+from hrbot.knowledge.repository import KnowledgeRepository
+from hrbot.knowledge.retriever import STRONG_THRESHOLD, WEAK_THRESHOLD, Retriever
+from hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
 
 
 class TestRetrieverKnownQuestions:

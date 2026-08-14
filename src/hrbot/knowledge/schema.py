@@ -5,9 +5,9 @@ Defines the canonical Pydantic v2 models for knowledge facts and retrieval resul
 """
 
 import re
-from typing import List, Literal
+from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class KnowledgeEntry(BaseModel):
@@ -26,7 +26,7 @@ class KnowledgeEntry(BaseModel):
         ...,
         description="Fine-grained topic tag that maps to a single, clear question.",
     )
-    keywords: List[str] = Field(
+    keywords: list[str] = Field(
         ...,
         description="Natural language keywords/phrases a user might search for. Must be non-empty.",
     )
@@ -74,7 +74,7 @@ class KnowledgeEntry(BaseModel):
 
     @field_validator("keywords")
     @classmethod
-    def validate_keywords(cls, v: List[str]) -> List[str]:
+    def validate_keywords(cls, v: list[str]) -> list[str]:
         """
         Validate keywords is a non-empty list of non-empty strings.
         """
@@ -116,9 +116,7 @@ class KnowledgeEntry(BaseModel):
             raise ValueError(f"weight must be non-negative. Got: {v}")
         return v
 
-    class Config:
-        """Pydantic v2 model config."""
-        str_strip_whitespace = True
+    model_config = ConfigDict(str_strip_whitespace=True)
 
 
 class ScoredMatch(BaseModel):
@@ -144,7 +142,7 @@ class RetrievalResult(BaseModel):
     Without ever needing to inspect raw scores.
     """
     query: str = Field(..., description="The original user query")
-    matches: List[ScoredMatch] = Field(
+    matches: list[ScoredMatch] = Field(
         default_factory=list,
         description="Top N ranked matches (e.g. top 3). Empty if no matches found."
     )

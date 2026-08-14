@@ -12,8 +12,8 @@ from pathlib import Path
 
 import pytest
 
-from src.hrbot.knowledge.repository import KnowledgeRepository
-from src.hrbot.knowledge.schema import KnowledgeEntry
+from hrbot.knowledge.repository import KnowledgeRepository
+from hrbot.knowledge.schema import KnowledgeEntry
 
 
 @pytest.fixture
@@ -127,8 +127,8 @@ class TestRepositoryHandlesErrors:
                 
                 # Copy broken.json to temp dir
                 broken = tmppath / "broken.json"
-                with open(broken, "w") as f:
-                    f.write(open(broken_file).read())
+                with open(broken_file) as source, open(broken, "w") as dest:
+                    dest.write(source.read())
                 
                 # Create valid.json
                 valid = tmppath / "valid.json"
@@ -223,16 +223,6 @@ class TestRepositoryIntegration:
         
         # Check that we have entries from different topics
         topics = {e.topic for e in entries}
-        
-        # Should have topics from all 6 files
-        expected_topics = {
-            "company_overview",
-            "onboarding_documents",
-            "leave_casual_entitlement",
-            "attendance_working_hours",
-            "wfh_hybrid_policy",
-            "contact_hr",
-        }
         
         # At least some expected topics should be present
         assert len(topics) > 5
