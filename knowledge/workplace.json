@@ -1,1 +1,142 @@
-{`"todo`": `"populate HR content`"}
+[
+  {
+    "id": "wfh_policy_001",
+    "topic": "wfh_hybrid_policy",
+    "keywords": [
+      "work from home",
+      "WFH",
+      "hybrid days",
+      "remote work days",
+      "which days can I work from home"
+    ],
+    "question": "Which days can I work from home?",
+    "answer": "NovaTech's hybrid policy designates Tuesday and Thursday as work-from-home (WFH) days for most teams. Monday, Wednesday, and Friday are office days. However, your specific schedule may differ based on your team's requirements and manager's approval. Discuss your preferred schedule with your manager during onboarding. If you need to WFH on an office day, request in advance through your manager and log it in the WFH portal.",
+    "weight": 1.5
+  },
+  {
+    "id": "office_access_001",
+    "topic": "office_access_badge",
+    "keywords": [
+      "office badge",
+      "access card",
+      "building access",
+      "security badge",
+      "how to enter office"
+    ],
+    "question": "How do I access the office?",
+    "answer": "Your employee ID badge grants access to the NovaTech office building in HITECH City. Tap your badge at the main entrance and parking gates. Badges are issued on Day 1. You must display your badge in the office at all times. If you lose your badge, report it to the Admin team immediately. Visitors must sign in with the reception desk and wear a visitor badge. Access logs are maintained for security purposes.",
+    "weight": 1.0
+  },
+  {
+    "id": "conduct_001",
+    "topic": "workplace_conduct",
+    "keywords": [
+      "workplace behavior",
+      "conduct standards",
+      "professional behavior",
+      "code of conduct",
+      "workplace rules"
+    ],
+    "question": "What are the workplace conduct expectations?",
+    "answer": "NovaTech expects all employees to maintain professional conduct: 1. Treat colleagues with respect and courtesy, 2. Maintain confidentiality of company and client information, 3. Avoid discrimination, harassment, or bullying, 4. Use company resources responsibly, 5. Dress professionally (business casual minimum), 6. Refrain from consuming alcohol or drugs in the office, 7. Respect quiet zones and meeting room reservations. Violations may result in disciplinary action as per company policy. Report any violations to HR immediately.",
+    "weight": 1.5
+  },
+  {
+    "id": "emergency_001",
+    "topic": "emergency_procedures",
+    "keywords": [
+      "emergency procedures",
+      "fire alarm",
+      "evacuation",
+      "emergency plan",
+      "emergency exits"
+    ],
+    "question": "What should I do in case of an emergency in the office?",
+    "answer": "In case of emergency (fire, medical, natural disaster): 1. Activate the emergency alarm if needed (red buttons at exits), 2. Follow emergency exit signs to the assembly point in the parking lot, 3. Do NOT use elevators, 4. Ensure colleagues are accounted for, 5. Alert the Safety Officer or Admin team, 6. Follow instructions from security or emergency personnel. Emergency exits and assembly points are marked throughout the office. Fire drills are conducted quarterly. Familiarize yourself with exit routes on Day 1.",
+    "weight": 1.5
+  },
+  {
+    "id": "it_laptop_001",
+    "topic": "it_laptop_troubleshooting",
+    "keywords": [
+      "laptop issue",
+      "computer not working",
+      "hardware problem",
+      "device issue",
+      "get a new laptop"
+    ],
+    "question": "What should I do if my laptop is not working?",
+    "answer": "If your laptop malfunctions: 1. Restart the device first (resolves most issues), 2. Check your internet connection, 3. Force restart if necessary (Ctrl+Alt+Delete on Windows), 4. If the problem persists, contact IT Support via email (it-support@novatech.com) or call +91-40-6789-5444. Provide your employee ID, laptop model, and a description of the issue. IT will diagnose remotely first; if needed, schedule an onsite repair. For hardware failures, replacements are typically arranged within 2 business days. Do not attempt to open or repair the laptop yourself.",
+    "weight": 1.5
+  },
+  {
+    "id": "it_account_001",
+    "topic": "it_account_login_issues",
+    "keywords": [
+      "login problem",
+      "can't log in",
+      "password reset",
+      "account locked",
+      "authentication issue"
+    ],
+    "question": "What should I do if I can't log into my accounts?",
+    "answer": "If you cannot log in to your employee account, email, or systems: 1. Verify CAPS LOCK is off and you are using the correct credentials, 2. Try resetting your password using the 'Forgot Password' link, 3. If you receive an 'Account Locked' message, wait 15 minutes and retry (auto-unlock), 4. Contact IT Support at it-support@novatech.com or call +91-40-6789-5444 immediately. IT will verify your identity and assist with password reset or account unlock. Do not share your password with anyone, including IT staff. Always use secure password practices.",
+    "weight": 1.5
+  },
+  {
+    "id": "equipment_001",
+    "topic": "equipment_support",
+    "keywords": [
+      "equipment request",
+      "get a monitor",
+      "peripherals",
+      "keyboard mouse",
+      "office equipment"
+    ],
+    "question": "How do I request office equipment or peripherals?",
+    "answer": "If you need equipment (monitor, keyboard, mouse, headset, docking station), submit a request to IT Support: 1. Email it-support@novatech.com with your needs and justification, 2. Include your employee ID and current setup, 3. IT will assess the request and either approve or provide an alternative, 4. Approved equipment is delivered within 3-5 business days. Essential equipment is provided as part of standard setup. Additional peripherals require manager approval and business justification. Damaged equipment should be reported immediately for repair or replacement.",
+    "weight": 1.0
+  },
+  {
+    "id": "dress_code_001",
+    "topic": "dress_code",
+    "keywords": [
+      "dress code",
+      "what to wear",
+      "business casual",
+      "clothing expectations"
+    ],
+    "question": "What is the dress code at NovaTech?",
+    "answer": "NovaTech follows a business casual dress code: 1. Acceptable: Dress pants, trousers, skirts, collared shirts, blazers, closed-toe shoes, 2. Not acceptable: T-shirts, shorts, flip-flops, ripped clothing, excessive jewelry, 3. Exception: Casual Fridays allow jeans with a collared or branded NovaTech shirt. Client-facing roles may require formal business attire for meetings. When in doubt, choose professional over casual. Your manager will clarify any role-specific requirements.",
+    "weight": 1.0
+  },
+  {
+    "id": "facilities_001",
+    "topic": "office_facilities",
+    "keywords": [
+      "cafeteria",
+      "pantry",
+      "bathroom",
+      "parking",
+      "office facilities",
+      "restrooms"
+    ],
+    "question": "What facilities are available in the office?",
+    "answer": "NovaTech's Hyderabad office includes: 1. Pantry on each floor with complimentary tea, coffee, and water, 2. Subsidized cafeteria with vegetarian and non-vegetarian options, 3. Clean, well-maintained restrooms on every floor, 4. Parking on-site for employees (first-come, first-served), 5. Recreation area with table tennis and board games, 6. Prayer room for all faiths, 7. First-aid station with trained staff. The cafeteria opens 12:30 PM-1:30 PM. Parking is FREE for all employees. Facility maintenance can be requested through the Admin team.",
+    "weight": 1.0
+  },
+  {
+    "id": "wfh_requirements_001",
+    "topic": "wfh_setup_requirements",
+    "keywords": [
+      "work from home setup",
+      "internet requirements",
+      "WFH equipment",
+      "VPN",
+      "remote work requirements"
+    ],
+    "question": "What do I need to work from home?",
+    "answer": "For effective remote work: 1. Laptop and power adapter (issued by company), 2. Stable internet connection (minimum 5 Mbps), 3. VPN access (configured by IT on Day 1), 4. Quiet, dedicated workspace free from distractions, 5. Headset for calls and video conferences, 6. Phone or mobile device for emergency contact. You are expected to maintain the same availability and responsiveness as in the office. Log your WFH status in the portal at the start of the day. Keep your laptop secure and practice information security when working from home.",
+    "weight": 1.0
+  }
+]
