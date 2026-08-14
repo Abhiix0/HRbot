@@ -1,0 +1,10 @@
+[
+  {
+    "id": "test_broken_001",
+    "topic": "test_topic",
+    "keywords": ["test"],
+    "question": "This is a test entry with broken JSON",
+    "answer": "This entry has a missing comma and bracket",
+    "weight": 1.0
+  }
+  // This comment breaks JSON syntax and the closing bracket is missing
