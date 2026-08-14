@@ -1,12 +1,11 @@
 """
 Knowledge Base Schema
 
-Defines the canonical Pydantic v2 model for all knowledge facts in the HR chatbot.
-Every fact, regardless of source file, must conform to KnowledgeEntry.
+Defines the canonical Pydantic v2 models for knowledge facts and retrieval results.
 """
 
 import re
-from typing import List
+from typing import List, Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -120,3 +119,40 @@ class KnowledgeEntry(BaseModel):
     class Config:
         """Pydantic v2 model config."""
         str_strip_whitespace = True
+
+
+class ScoredMatch(BaseModel):
+    """
+    A knowledge entry paired with a relevance score.
+    
+    Used by Retriever to return ranked results.
+    """
+    entry: KnowledgeEntry = Field(..., description="The knowledge entry")
+    score: float = Field(..., description="Relevance score (>= 0)")
+
+
+class RetrievalResult(BaseModel):
+    """
+    Contract between the Retriever and the Conversation Core (P3).
+    
+    Encapsulates a complete retrieval result with confidence classification.
+    The Conversation Core should be able to determine:
+    - Did we find something? (check matches list)
+    - What did we find? (check matches[0].entry)
+    - How confident are we? (check confidence)
+    
+    Without ever needing to inspect raw scores.
+    """
+    query: str = Field(..., description="The original user query")
+    matches: List[ScoredMatch] = Field(
+        default_factory=list,
+        description="Top N ranked matches (e.g. top 3). Empty if no matches found."
+    )
+    top_score: float = Field(
+        default=0.0,
+        description="Score of the top match, or 0 if no matches found."
+    )
+    confidence: Literal["strong", "weak", "none"] = Field(
+        default="none",
+        description="Confidence level based on top_score and thresholds."
+    )

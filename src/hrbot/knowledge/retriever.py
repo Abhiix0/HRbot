@@ -7,20 +7,23 @@ No embeddings, no vector databases, no external API calls.
 
 import logging
 import re
-from dataclasses import dataclass
 from typing import List, Union
 
-from src.hrbot.knowledge.schema import KnowledgeEntry
+from src.hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
 from src.hrbot.knowledge.repository import KnowledgeRepository
 
 logger = logging.getLogger(__name__)
 
+# Confidence classification thresholds
+# Calibrated based on observed score ranges from real queries (Aug 2026):
+#   - Strong match (exact phrase + weight): 5.26, 15.72
+#   - Weak match (partial/generic overlap): 0.68, 0.79, 0.89
+#   - None (no relevant content): < 0.5
+# STRONG_THRESHOLD at 2.0 captures direct keyword matches (entry weight ~1.5 × exact match bonus)
+# WEAK_THRESHOLD at 0.5 captures partial matches but filters generic word overlap noise
+STRONG_THRESHOLD = 2.0
+WEAK_THRESHOLD = 0.5
 
-@dataclass
-class ScoredMatch:
-    """A knowledge entry paired with a relevance score."""
-    entry: KnowledgeEntry
-    score: float
 
 
 class Retriever:
@@ -48,31 +51,69 @@ class Retriever:
         else:
             self.entries = entries
 
-    def retrieve(self, query: str) -> List[ScoredMatch]:
+    def retrieve(self, query: str) -> RetrievalResult:
         """
         Retrieve and rank knowledge entries matching the query.
+        
+        Returns a RetrievalResult containing:
+        - matches: Top N ranked ScoredMatch objects (score > 0)
+        - top_score: Score of the best match
+        - confidence: "strong", "weak", or "none" based on top_score thresholds
         
         Args:
             query: User's natural language query
             
         Returns:
-            List of ScoredMatch objects sorted by score (descending).
-            Only includes entries with score > 0.
+            RetrievalResult with confidence classification.
         """
         if not query or not query.strip():
-            return []
+            return RetrievalResult(
+                query=query,
+                matches=[],
+                top_score=0.0,
+                confidence="none"
+            )
 
         query_normalized = query.lower().strip()
-        results = []
+        all_matches = []
 
         for entry in self.entries:
             score = self._score_entry(query_normalized, entry)
             if score > 0:
-                results.append(ScoredMatch(entry=entry, score=score))
+                all_matches.append(ScoredMatch(entry=entry, score=score))
 
         # Sort by score descending
-        results.sort(key=lambda m: m.score, reverse=True)
-        return results
+        all_matches.sort(key=lambda m: m.score, reverse=True)
+        
+        # Take top N matches (e.g. top 3)
+        top_matches = all_matches[:3]
+        top_score = top_matches[0].score if top_matches else 0.0
+        confidence = self._classify_confidence(top_score)
+
+        return RetrievalResult(
+            query=query,
+            matches=top_matches,
+            top_score=top_score,
+            confidence=confidence
+        )
+
+    def _classify_confidence(self, score: float) -> str:
+        """
+        Classify confidence level based on top match score.
+        
+        Args:
+            score: Top match score
+            
+        Returns:
+            "strong", "weak", or "none"
+        """
+        if score >= STRONG_THRESHOLD:
+            return "strong"
+        elif score >= WEAK_THRESHOLD:
+            return "weak"
+        else:
+            return "none"
+
 
     def _score_entry(self, query: str, entry: KnowledgeEntry) -> float:
         """

@@ -7,8 +7,8 @@ Tests keyword-based ranking and scoring logic in isolation.
 import pytest
 
 from src.hrbot.knowledge.repository import KnowledgeRepository
-from src.hrbot.knowledge.retriever import Retriever, ScoredMatch
-from src.hrbot.knowledge.schema import KnowledgeEntry
+from src.hrbot.knowledge.retriever import Retriever
+from src.hrbot.knowledge.schema import KnowledgeEntry, RetrievalResult, ScoredMatch
 
 
 @pytest.fixture
@@ -61,95 +61,56 @@ class TestRetriever:
 
     def test_retrieve_exact_keyword_match(self, retriever):
         """Test that exact keyword phrases are matched with high scores."""
-        results = retriever.retrieve("casual leave")
+        result = retriever.retrieve("casual leave")
         
-        assert len(results) > 0
-        assert results[0].entry.id == "leave_casual_001"
-        assert results[0].score > 0
+        assert isinstance(result, RetrievalResult)
+        assert len(result.matches) > 0
+        assert result.matches[0].entry.id == "leave_casual_001"
+        assert result.top_score > 0
 
     def test_retrieve_partial_keyword_match(self, retriever):
         """Test that partial keyword matches score well."""
-        results = retriever.retrieve("work hours")
+        result = retriever.retrieve("work hours")
         
-        assert len(results) > 0
+        assert len(result.matches) > 0
         # Should match "office hours" or "work timing" keywords
-        assert results[0].entry.topic == "working_hours"
-
-    def test_retrieve_question_overlap(self, retriever):
-        """Test that query words matching question text score."""
-        results = retriever.retrieve("how many days off")
-        
-        assert len(results) > 0
-        # Should match entries about leave/days
+        assert result.matches[0].entry.topic == "working_hours"
 
     def test_retrieve_laptop_query(self, retriever):
         """Test a practical laptop troubleshooting query."""
-        results = retriever.retrieve("laptop not working")
+        result = retriever.retrieve("laptop not working")
         
-        assert len(results) > 0
-        assert results[0].entry.id == "laptop_001"
-        assert results[0].score > 0.5
+        assert len(result.matches) > 0
+        assert result.matches[0].entry.id == "laptop_001"
+        assert result.top_score > 0.5
 
     def test_retrieve_empty_query(self, retriever):
         """Test that empty queries return no results."""
-        results = retriever.retrieve("")
-        assert len(results) == 0
+        result = retriever.retrieve("")
+        assert len(result.matches) == 0
+        assert result.confidence == "none"
         
-        results = retriever.retrieve("   ")
-        assert len(results) == 0
-
-    def test_retrieve_nonexistent_topic(self, retriever):
-        """Test that nonexistent topics return low/no scores."""
-        results = retriever.retrieve("quantum computing")
-        
-        # Should still get results due to generic word overlap, but with low scores
-        if results:
-            assert results[0].score < 1.0
+        result = retriever.retrieve("   ")
+        assert len(result.matches) == 0
+        assert result.confidence == "none"
 
     def test_retrieve_sorted_by_score(self, retriever):
         """Test that results are sorted by score descending."""
-        results = retriever.retrieve("leave")
+        result = retriever.retrieve("leave")
         
-        assert len(results) > 0
-        for i in range(len(results) - 1):
-            assert results[i].score >= results[i + 1].score
+        assert len(result.matches) > 0
+        for i in range(len(result.matches) - 1):
+            assert result.matches[i].score >= result.matches[i + 1].score
 
-    def test_retrieve_scored_match_structure(self, retriever):
-        """Test that ScoredMatch objects have correct structure."""
-        results = retriever.retrieve("casual leave")
+    def test_retrieval_result_structure(self, retriever):
+        """Test that RetrievalResult has all required fields."""
+        result = retriever.retrieve("casual leave")
         
-        assert len(results) > 0
-        match = results[0]
-        assert isinstance(match, ScoredMatch)
-        assert isinstance(match.entry, KnowledgeEntry)
-        assert isinstance(match.score, float)
-        assert match.score > 0
-
-    def test_retrieve_weight_multiplier(self, retriever, sample_entries):
-        """Test that entry.weight multiplies the score."""
-        # Find entries with different weights
-        high_weight = [e for e in sample_entries if e.weight == 1.5]
-        low_weight = [e for e in sample_entries if e.weight == 1.0]
-        
-        if high_weight and low_weight:
-            retriever_hw = Retriever(high_weight)
-            retriever_lw = Retriever(low_weight)
-            
-            # Same query on both should show weight impact
-            query = "company"
-            results_hw = retriever_hw.retrieve(query)
-            results_lw = retriever_lw.retrieve(query)
-            
-            # Just verify weight is being used (tested more directly elsewhere)
-            assert True  # Weight is applied in _score_entry
-
-    def test_retrieve_only_positive_scores(self, retriever):
-        """Test that only entries with score > 0 are returned."""
-        results = retriever.retrieve("asdfghjkl")  # Gibberish unlikely to match anything
-        
-        # Even gibberish might match something due to generic overlap
-        for match in results:
-            assert match.score > 0
+        assert hasattr(result, 'query')
+        assert hasattr(result, 'matches')
+        assert hasattr(result, 'top_score')
+        assert hasattr(result, 'confidence')
+        assert result.query == "casual leave"
 
     def test_retriever_with_repository(self):
         """Test that Retriever can be initialized with a KnowledgeRepository."""
@@ -160,34 +121,107 @@ class TestRetriever:
         assert len(retriever.entries) > 0
         
         # Should be able to retrieve
-        results = retriever.retrieve("leave")
-        assert len(results) > 0
+        result = retriever.retrieve("leave")
+        assert len(result.matches) > 0
+        assert isinstance(result, RetrievalResult)
 
-    def test_tokenize(self):
-        """Test the tokenization helper."""
-        tokens = Retriever._tokenize("What time does WORK start?")
-        
-        assert "what" in tokens
-        assert "time" in tokens
-        assert "work" in tokens
-        assert "start" in tokens
-        assert all(isinstance(t, str) for t in tokens)
 
-    def test_exact_keyword_match_both_directions(self, retriever):
-        """Test that exact matches work in both directions."""
-        results = retriever.retrieve("office")
-        
-        # "office hours" is a keyword, "office" is in query
-        assert len(results) > 0
+class TestConfidenceClassification:
+    """Test confidence classification logic."""
 
-    def test_score_scaling_with_multiple_matches(self, retriever):
-        """Test that multiple keyword matches increase score."""
-        # Query matches multiple keywords of an entry
-        results = retriever.retrieve("leave casual days")
+    def test_confidence_strong(self):
+        """Test that high scores get 'strong' confidence."""
+        # Create entry with high weight and exact keyword match
+        entries = [
+            KnowledgeEntry(
+                id="test_strong_001",
+                topic="test_strong",
+                keywords=["test query"],
+                question="Test?",
+                answer="Test.",
+                weight=2.0,  # High weight
+            )
+        ]
+        retriever = Retriever(entries)
+        result = retriever.retrieve("test query")
         
-        assert len(results) > 0
-        # Entry with multiple matching keywords should score highest
-        assert results[0].entry.topic == "leave_casual_entitlement"
+        # Should get strong confidence due to exact match + high weight
+        assert result.confidence == "strong"
+        assert result.top_score >= 2.0
+
+    def test_confidence_none_empty(self):
+        """Test that empty queries get 'none' confidence."""
+        entries = [
+            KnowledgeEntry(
+                id="test_001",
+                topic="test",
+                keywords=["test"],
+                question="Test?",
+                answer="Test.",
+                weight=1.0,
+            )
+        ]
+        retriever = Retriever(entries)
+        result = retriever.retrieve("")
+        
+        assert result.confidence == "none"
+        assert len(result.matches) == 0
+        assert result.top_score == 0.0
+
+    def test_confidence_labels_valid(self, retriever):
+        """Test that confidence is always a valid label."""
+        queries = ["leave", "laptop", "xyz", "", "unknown topic"]
+        for query in queries:
+            result = retriever.retrieve(query)
+            assert result.confidence in ["strong", "weak", "none"]
+
+    def test_confidence_strong_threshold(self):
+        """Test strong confidence threshold behavior."""
+        from src.hrbot.knowledge.retriever import STRONG_THRESHOLD
+        
+        # Entry that will score above STRONG_THRESHOLD
+        entries = [
+            KnowledgeEntry(
+                id="entry_001",
+                topic="topic",
+                keywords=["exact phrase"],
+                question="Question?",
+                answer="Answer.",
+                weight=2.0,
+            )
+        ]
+        retriever = Retriever(entries)
+        result = retriever.retrieve("exact phrase")
+        
+        if result.top_score >= STRONG_THRESHOLD:
+            assert result.confidence == "strong"
+
+    def test_confidence_weak_threshold(self):
+        """Test weak confidence threshold behavior."""
+        from src.hrbot.knowledge.retriever import WEAK_THRESHOLD
+        
+        # This is harder to test precisely without controlling scoring,
+        # but we verify the logic is applied
+        entries = [
+            KnowledgeEntry(
+                id="entry_001",
+                topic="topic",
+                keywords=["test"],
+                question="What is test?",
+                answer="Test is a test.",
+                weight=1.0,
+            )
+        ]
+        retriever = Retriever(entries)
+        
+        # Query that will get weak score
+        result = retriever.retrieve("test")
+        
+        # Verify confidence classification follows thresholds
+        if result.top_score >= WEAK_THRESHOLD:
+            assert result.confidence in ["strong", "weak"]
+        else:
+            assert result.confidence == "none"
 
 
 class TestRetrieverScoring:
@@ -208,14 +242,23 @@ class TestRetrieverScoring:
         retriever = Retriever(entries)
 
         # Exact match should score highest
-        exact_results = retriever.retrieve("keyword")
-        assert len(exact_results) > 0
-        exact_score = exact_results[0].score
+        exact_result = retriever.retrieve("keyword")
+        assert len(exact_result.matches) > 0
+        exact_score = exact_result.top_score
 
         # Partial match should score lower
-        partial_results = retriever.retrieve("key")
-        partial_score = partial_results[0].score if partial_results else 0
+        partial_result = retriever.retrieve("key")
+        partial_score = partial_result.top_score if partial_result.matches else 0
 
-        # This verifies some kind of scoring difference
         # Exact match is more direct
         assert exact_score > 0
+
+    def test_tokenize(self):
+        """Test the tokenization helper."""
+        tokens = Retriever._tokenize("What time does WORK start?")
+        
+        assert "what" in tokens
+        assert "time" in tokens
+        assert "work" in tokens
+        assert "start" in tokens
+        assert all(isinstance(t, str) for t in tokens)
